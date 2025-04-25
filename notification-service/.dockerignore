@@ -1,0 +1,7 @@
+node_modules
+dist
+src
+Dockerfile
+README.md
+.git
+.env
