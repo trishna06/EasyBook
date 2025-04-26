@@ -1,0 +1,58 @@
+import { Component, Inject } from "@angular/core";
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+} from "@angular/material/dialog";
+import { RoomManagerService } from "../../services/room-manager.services";
+import { RoomModel } from "../../models/room.model";
+import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+
+@Component({
+  selector: "app-edit-room",
+  imports: [FormsModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  templateUrl: "./edit-room.component.html",
+  styleUrl: "./edit-room.component.scss",
+})
+export class AddRoomComponent {
+  room: RoomModel = { id: 0, number: "", type: "", availability: null };
+
+  constructor(
+    public dialogRef: MatDialogRef<AddRoomComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: RoomModel,
+    private roomManagerService: RoomManagerService
+  ) {
+    if(data){
+      this.room = data;
+    }
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
+  onSave() {
+    if (this.room.id > 0) {
+      this.roomManagerService.put(this.room.id, this.room).subscribe({
+        next: (response) => {
+          this.dialogRef.close(this.room);
+          console.log("POST Success:", response);
+        },
+        error: (err) => console.error("POST Error:", err),
+      });
+    }
+    else{
+      this.roomManagerService.post(this.room).subscribe({
+        next: (response) => {
+          this.room.id = response;
+          this.dialogRef.close(this.room);
+          console.log("POST Success:", response);
+        },
+        error: (err) => console.error("POST Error:", err),
+      });
+
+    }
+  }
+}
