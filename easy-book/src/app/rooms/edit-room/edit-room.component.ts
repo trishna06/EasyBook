@@ -18,6 +18,7 @@ import { MatInputModule } from "@angular/material/input";
 })
 export class AddRoomComponent {
   room: RoomModel = { id: 0, number: "", type: "", availability: null };
+  title: string = "Add New Room";
 
   constructor(
     public dialogRef: MatDialogRef<AddRoomComponent>,
@@ -25,6 +26,7 @@ export class AddRoomComponent {
     private roomManagerService: RoomManagerService
   ) {
     if(data){
+      this.title = "Update Room"
       this.room = data;
     }
   }
