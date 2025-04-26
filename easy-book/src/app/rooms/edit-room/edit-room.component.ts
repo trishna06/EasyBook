@@ -2,17 +2,13 @@ import { Component, Inject } from "@angular/core";
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
-  MatDialogModule,
 } from "@angular/material/dialog";
 import { RoomManagerService } from "../../services/room-manager.services";
 import { RoomModel } from "../../models/room.model";
-import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
 
 @Component({
+  standalone: false,
   selector: "app-edit-room",
-  imports: [FormsModule, MatDialogModule, MatFormFieldModule, MatInputModule],
   templateUrl: "./edit-room.component.html",
   styleUrl: "./edit-room.component.scss",
 })

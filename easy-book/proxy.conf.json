@@ -7,7 +7,7 @@
     "logLevel": "debug"
   },
   "/booking-api": {
-    "target": "http://localhost:5002",
+    "target": "http://localhost:50148",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": { "^/booking-api": "" },

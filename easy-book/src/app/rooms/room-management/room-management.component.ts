@@ -20,43 +20,42 @@ export class RoomManagementComponent {
   room: RoomModel | null = null;
 
   ngOnInit(): void {
-    this.fetchData();
+    this.fetch();
   }
 
-  fetchData() {
+  fetch() {
     this.roomManagerService.get().subscribe({
       next: (response) => {
         this.rooms = response;
-        console.log(this.room);
       },
       error: (err) => console.error("GET Error:", err),
     });
   }
 
-  deleteRoom(id: number): void {    
+  delete(id: number): void {    
     this.roomManagerService.delete(id).subscribe({
       next: (response) => {
-        this.fetchData();
+        this.fetch();
         console.log("POST Success:", response);
       },
       error: (err) => console.error("POST Error:", err),
     });
   }
 
-  openAddRoom() {
+  openAdd() {
     const dialogRef = this.dialog.open(AddRoomComponent, {
       width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.fetchData();
+        this.fetch();
         console.log('Room added:', result);
       }
     });
   }
 
-  editRoom(room: RoomModel): void {    
+  edit(room: RoomModel): void {    
     const dialogRef = this.dialog.open(AddRoomComponent, {
       width: '400px',
       data: room
@@ -64,7 +63,7 @@ export class RoomManagementComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.fetchData();
+        this.fetch();
         console.log('Room updated:', result);
       }
     });
