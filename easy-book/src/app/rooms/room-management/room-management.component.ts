@@ -10,8 +10,9 @@ import { AddRoomComponent } from "../edit-room/edit-room.component";
   templateUrl: "./room-management.component.html",
   styleUrl: "./room-management.component.scss",
 })
+
 export class RoomManagementComponent {
-  constructor(private roomManagerService: RoomManagerService,
+ constructor(private roomManagerService: RoomManagerService,
     private dialog: MatDialog
   ) {}
 

@@ -13,6 +13,22 @@ import { RoomModel } from "../../models/room.model";
   styleUrl: "./booking-dashboard.component.scss",
 })
 export class BookingDashboardComponent {
+  constructor(private dialog: MatDialog) {}
+
+  openBookingCreation(): void {
+    const dialogRef = this.dialog.open(BookingComponent, {
+      width: "500px",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log("Dialog closed with user data:", result);
+        // You can refresh your user list here
+      } else {
+        console.log("Dialog closed without creating user");
+      }
+    });
+  }
   displayedColumns = [
     "userName",
     "roomNumber",
