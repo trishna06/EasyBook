@@ -29,6 +29,9 @@ import { NotificationRepository } from './notification.repository';
             clientId: 'notification-producer',
             brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
           },
+          consumer: {
+            groupId: 'notification-service-group', // groupId must be unique per service
+          },
           producer: {},
         },
       },

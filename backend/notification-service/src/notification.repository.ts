@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { FilterLogsDto } from './notification.dto';
 import { Notification } from './notification.entity';
+import { NotificationInterface } from './NotificationInterface';
 
 @Injectable()
 export class NotificationRepository {
@@ -12,7 +13,7 @@ export class NotificationRepository {
     this.notificationModel = this.sequelize.model(Notification);
   }
 
-  async create(payload: Partial<Notification>) {
+  async create(payload: NotificationInterface): Promise<Notification> {
     return this.notificationModel.create(payload);
   }
 

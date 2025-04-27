@@ -1,6 +1,13 @@
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Ctx,
+  EventPattern,
+  KafkaContext,
+  Payload,
+} from '@nestjs/microservices';
 import { AppService } from './app.service';
 import { FilterLogsDto } from './notification.dto';
+import { NotificationInterface } from './NotificationInterface';
 
 @Controller()
 export class AppController {
@@ -15,5 +22,22 @@ export class AppController {
   async resend(@Param('id') id: number): Promise<{ success: boolean }> {
     await this.appService.resend(id);
     return { success: true };
+  }
+
+  @EventPattern('notifications')
+  async onNotifications(@Payload() payload: any, @Ctx() context: KafkaContext) {
+    console.debug('Received message:', payload);
+
+    // Save to DB
+    if (payload !== null && payload !== undefined) {
+      const body: NotificationInterface = {
+        type: payload.type,
+        user: payload.user,
+        message: payload.message,
+        status: 'PENDING', // or any logic you want
+        sentAt: new Date(),
+      };
+      await this.appService.handleMessage(body);
+    }
   }
 }

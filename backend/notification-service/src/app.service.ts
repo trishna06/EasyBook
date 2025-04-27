@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { FilterLogsDto } from './notification.dto';
 import { NotificationRepository } from './notification.repository';
+import { NotificationInterface } from './NotificationInterface';
 
 @Injectable()
 export class AppService {
@@ -12,7 +13,7 @@ export class AppService {
     private readonly kafkaClient: ClientKafka,
   ) {}
 
-  async handleMessage(payload: any) {
+  async handleMessage(payload: NotificationInterface) {
     return this.notificationRepo.create({
       type: payload.type,
       user: payload.user,
@@ -21,9 +22,11 @@ export class AppService {
     });
   }
   async onModuleInit() {
-    this.kafkaClient.subscribeToResponseOf('notifications');
+    // this.kafkaClient.subscribeToResponseOf('notifications');
     await this.kafkaClient.connect();
   }
+
+  // @MessagePattern('notifications') // Listening to 'notifications' topic
 
   async findAll(filter: FilterLogsDto) {
     return this.notificationRepo.findAll(filter);
@@ -31,13 +34,13 @@ export class AppService {
 
   async resend(id: number): Promise<void> {
     const notif = await this.notificationRepo.findById(id);
-    console.log('data is', notif);
+    const messagePayload = notif.dataValues;
     if (!notif) throw new Error('Notification not found');
     this.kafkaClient.emit('notifications', {
-      type: notif.type,
-      user: notif.user,
-      message: notif.message,
-      status: notif.status,
+      type: messagePayload.type,
+      user: messagePayload.user,
+      message: messagePayload.message,
+      status: messagePayload.status,
     });
   }
 }
