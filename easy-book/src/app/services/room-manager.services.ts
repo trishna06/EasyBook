@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
-import { RoomModel } from "../models/room.model";
+import { RoomAvailabilityModel, RoomModel } from "../models/room.model";
 
 @Injectable({
   providedIn: "root",
@@ -27,5 +27,9 @@ export class RoomManagerService {
 
   delete(id: number): Observable<object> {
     return this.http.delete(`${this.apiEndpoint}/api/Room/${id}`);
+  }
+
+  stream(): Observable<RoomAvailabilityModel[]> {
+    return this.http.get<RoomAvailabilityModel[]>(`${this.apiEndpoint}/api/Room/Stream`);
   }
 }

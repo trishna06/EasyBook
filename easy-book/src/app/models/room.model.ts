@@ -9,5 +9,7 @@ export interface RoomModel {
     roomId: number;
     type: string;
     status: string;
+    updatedDateTime: string;
+    roomNumber: string;
   }
   

@@ -36,6 +36,15 @@ const routes: Routes = [
         canActivate: [authGuard],
         data: { role: 'admin' },
       },
+      {
+        path: 'dashbaord',
+        loadChildren: () =>
+          import('../stream/stream.module').then(
+            (m) => m.StreamModule
+          ),
+        canActivate: [authGuard],
+        data: { role: 'admin' },
+      },
     ],
   },
 ];
