@@ -1,7 +1,7 @@
 node_modules
 dist
-src
 Dockerfile
-README.md
+docker-compose.yml
+*.md
 .git
-.env
+.gitignore
