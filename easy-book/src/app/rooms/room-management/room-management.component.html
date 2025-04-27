@@ -1,7 +1,9 @@
 <mat-card>
   <div class="header">
     <h3>Room Availability</h3>
-    <button mat-raised-button color="primary">+ Add Room</button>
+    <button mat-raised-button color="primary" (click)="openRoomCreation()">
+      + Add Room
+    </button>
   </div>
   <table mat-table [dataSource]="rooms" class="mat-elevation-z8">
     <ng-container matColumnDef="roomNumber">
