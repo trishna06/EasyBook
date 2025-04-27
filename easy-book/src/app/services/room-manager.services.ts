@@ -1,26 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { RoomModel } from '../models/room.model';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/internal/Observable";
+import { RoomModel } from "../models/room.model";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class RoomManagerService {
   apiEndpoint: string | undefined;
 
-  constructor(
-    private http: HttpClient,
-  ) {
+  constructor(private http: HttpClient) {
     this.apiEndpoint = "room-api";
   }
 
   get(): Observable<RoomModel[]> {
-    let api = this.apiEndpoint + '/api/Room/';
-    console.log(api)
-    return this.http.get<RoomModel[]>(
-      api
-    );
+    return this.http.get<RoomModel[]>(this.apiEndpoint + "/api/Room/");
   }
 
   post(request: RoomModel): Observable<number> {

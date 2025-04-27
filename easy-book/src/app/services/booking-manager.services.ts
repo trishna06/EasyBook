@@ -14,9 +14,7 @@ export class BookingManagerService {
   }
 
   get(): Observable<BookingModel[]> {
-    let api = this.apiEndpoint + "/api/Booking/";
-    console.log(api);
-    return this.http.get<BookingModel[]>(api);
+    return this.http.get<BookingModel[]>(this.apiEndpoint + "/api/Booking/");
   }
 
   post(request: BookingModel): Observable<number> {

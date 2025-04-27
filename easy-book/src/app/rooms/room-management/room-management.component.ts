@@ -20,13 +20,16 @@ export class RoomManagementComponent {
   room: RoomModel | null = null;
 
   ngOnInit(): void {
-    this.fetch();
+    setInterval(() => {
+      this.fetch()
+    }, 5000)
   }
 
   fetch() {
     this.roomManagerService.get().subscribe({
       next: (response) => {
         this.rooms = response;
+        console.log("Rooms updated")
       },
       error: (err) => console.error("GET Error:", err),
     });
